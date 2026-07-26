@@ -1,0 +1,98 @@
+/* ==========================================
+   CARPOOL ADMIN PANEL
+   VARIABLES.CSS
+========================================== */
+
+/* Google Font */
+:root {
+
+    /* Typography */
+    --font-family: 'Inter', sans-serif;
+
+    /* Layout */
+    --navbar-height: 70px;
+    --sidebar-width: 280px;
+    --container-padding: 24px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,.05);
+    --shadow-md: 0 8px 20px rgba(0,0,0,.08);
+    --shadow-lg: 0 18px 40px rgba(0,0,0,.12);
+
+    /* Animation */
+    --transition: .3s ease;
+
+    /* Default Theme (Purple) */
+    --primary: #7C3AED;
+    --primary-hover: #6D28D9;
+
+    --background: #F6F8FC;
+    --surface: #FFFFFF;
+
+    --text: #1F2937;
+    --text-light: #6B7280;
+
+    --border: #E5E7EB;
+
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --info: #3B82F6;
+
+}
+
+/* ===========================
+   BLUE THEME
+=========================== */
+
+[data-theme="blue"]{
+
+    --primary:#2563EB;
+    --primary-hover:#1D4ED8;
+
+}
+
+/* ===========================
+   GREEN THEME
+=========================== */
+
+[data-theme="green"]{
+
+    --primary:#16A34A;
+    --primary-hover:#15803D;
+
+}
+
+/* ===========================
+   DARK THEME
+=========================== */
+
+[data-theme="dark"]{
+
+    --background:#0F172A;
+
+    --surface:#1E293B;
+
+    --text:#F8FAFC;
+
+    --text-light:#CBD5E1;
+
+    --border:#334155;
+
+}
+
+/* ===========================
+   LIGHT THEME
+=========================== */
+
+[data-theme="light"]{
+
+    --primary:#6366F1;
+
+}

@@ -1,0 +1,231 @@
+/* ==========================================
+   GLOBAL RESET
+========================================== */
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:var(--font-family);
+    background:var(--background);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:background .3s ease,color .3s ease;
+}
+
+/* ==========================================
+   TYPOGRAPHY
+========================================== */
+
+h1,h2,h3,h4,h5,h6{
+    margin:0;
+    color:var(--text);
+    font-weight:700;
+}
+
+p{
+    margin:0;
+    color:var(--text-light);
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+button{
+    border:none;
+    background:none;
+    outline:none;
+    cursor:pointer;
+}
+
+input,
+textarea,
+select{
+    outline:none;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:var(--background);
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--primary);
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--primary-hover);
+}
+
+/* ==========================================
+   LAYOUT
+========================================== */
+
+.main-content{
+
+    margin-top:70px;
+
+    padding:30px;
+
+    min-height:calc(100vh - 70px);
+
+    transition:.3s;
+
+}
+
+.container-fluid{
+
+    max-width:100%;
+
+    margin:0 auto;
+
+    padding:0;
+
+}
+
+/* ==========================================
+   COMMON CARD
+========================================== */
+
+.card-box{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:24px;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:.3s ease;
+
+}
+
+.card-box:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.btn-primary-custom{
+
+    background:var(--primary);
+
+    color:#fff;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.btn-primary-custom:hover{
+
+    background:var(--primary-hover);
+
+}
+
+/* ==========================================
+   UTILITIES
+========================================== */
+
+.bg-surface{
+
+    background:var(--surface);
+
+}
+
+.text-light-custom{
+
+    color:var(--text-light);
+
+}
+
+.rounded-lg{
+
+    border-radius:18px;
+
+}
+
+.shadow-sm{
+
+    box-shadow:var(--shadow-sm)!important;
+
+}
+
+.shadow-md{
+
+    box-shadow:var(--shadow-md)!important;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .main-content{
+
+        padding:20px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .main-content{
+
+        margin-top:70px;
+
+        padding:15px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .main-content{
+
+        padding:12px;
+
+    }
+
+}

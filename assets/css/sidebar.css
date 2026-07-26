@@ -1,0 +1,215 @@
+/* ===================================================
+   SIDEBAR
+=================================================== */
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: -290px;
+
+    width: 280px;
+    height: 100vh;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 30px rgba(0,0,0,.15);
+
+    transition: .35s ease;
+
+    z-index: 1050;
+
+    overflow-y: auto;
+
+}
+
+/* Open Sidebar */
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+/* ===================================================
+   OVERLAY
+=================================================== */
+
+.sidebar-overlay{
+
+    position: fixed;
+
+    inset:0;
+
+    background: rgba(0,0,0,.45);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.35s;
+
+    z-index:1040;
+
+}
+
+.sidebar-overlay.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+/* ===================================================
+   HEADER
+=================================================== */
+
+.sidebar-header{
+
+    height:70px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.sidebar-header h3{
+
+    margin:0;
+
+    color:var(--primary);
+
+    font-weight:700;
+
+}
+
+.close-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    background:#f5f5f5;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.close-btn:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* ===================================================
+   MENU
+=================================================== */
+
+.sidebar-menu{
+
+    list-style:none;
+
+    padding:20px 15px;
+
+    margin:0;
+
+}
+
+.sidebar-menu li{
+
+    margin-bottom:8px;
+
+}
+
+.sidebar-menu li a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    text-decoration:none;
+
+    color:#444;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+    font-weight:500;
+
+}
+
+.sidebar-menu li a i{
+
+    font-size:20px;
+
+}
+
+.sidebar-menu li:hover a{
+
+    background:rgba(124,58,237,.12);
+
+    color:var(--primary);
+
+}
+
+.sidebar-menu li.active a{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* ===================================================
+   SCROLLBAR
+=================================================== */
+
+.sidebar::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+
+    background:#d0d0d0;
+
+    border-radius:20px;
+
+}
+
+/* ===================================================
+   MOBILE
+=================================================== */
+
+@media(max-width:768px){
+
+    .sidebar{
+
+        width:260px;
+
+    }
+
+}
