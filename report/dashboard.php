@@ -31,6 +31,9 @@
 </head>
 
 <body>
+    <?php
+require_once 'includes/dashboard_queries.php';
+?>
 
     <!-- Sidebar -->
     <?php include 'components/sidebar.php'; ?>
@@ -68,7 +71,7 @@
                 </div>
 
                 <div class="stat-content">
-                    <h3>1,245</h3>
+                    <h3><?= number_format($totalUsers) ?></h3>
                     <span>Total Users</span>
                 </div>
 
@@ -81,7 +84,7 @@
                 </div>
 
                 <div class="stat-content">
-                    <h3>86</h3>
+                    <h3><?= number_format($totalActiveRides) ?></h3>
                     <span>Active Rides</span>
                 </div>
 
@@ -94,7 +97,7 @@
                 </div>
 
                 <div class="stat-content">
-                    <h3>542</h3>
+                 <h3><?= number_format($totalBookings) ?></h3>
                     <span>Total Bookings</span>
                 </div>
 
@@ -107,7 +110,7 @@
                 </div>
 
                 <div class="stat-content">
-                    <h3>₹2.45L</h3>
+                    <h3>₹<?= number_format($totalRevenue, 2) ?></h3>
                     <span>Total Revenue</span>
                 </div>
 
@@ -151,56 +154,31 @@
 
                 <div class="activity-list">
 
-                    <div class="activity-item">
+<?php foreach($recentActivities as $activity): ?>
 
-                        <i class="bi bi-check-circle-fill text-success"></i>
+<div class="activity-item">
 
-                        <div>
+    <i class="bi <?= $activity['icon']; ?> text-<?= $activity['color']; ?>"></i>
 
-                            <strong>Ride Completed</strong>
+    <div>
 
-                            <p>Mumbai → Pune</p>
+        <strong><?= htmlspecialchars($activity['title']); ?></strong>
 
-                        </div>
+        <p><?= htmlspecialchars($activity['description']); ?></p>
 
-                        <small>5 min ago</small>
+    </div>
 
-                    </div>
+    <small>
 
-                    <div class="activity-item">
+        <?= date('d M H:i', $activity['time']); ?>
 
-                        <i class="bi bi-person-plus-fill text-primary"></i>
+    </small>
 
-                        <div>
+</div>
 
-                            <strong>New User Registered</strong>
+<?php endforeach; ?>
 
-                            <p>Rahul Sharma</p>
-
-                        </div>
-
-                        <small>18 min ago</small>
-
-                    </div>
-
-                    <div class="activity-item">
-
-                        <i class="bi bi-credit-card-fill text-warning"></i>
-
-                        <div>
-
-                            <strong>Payment Received</strong>
-
-                            <p>₹450</p>
-
-                        </div>
-
-                        <small>40 min ago</small>
-
-                    </div>
-
-                </div>
-
+</div>
             </div>
 
         </div>
