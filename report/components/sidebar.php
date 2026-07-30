@@ -25,12 +25,12 @@
             </a>
         </li>
 
-        <li>
-            <a href="#">
-                <i class="bi bi-bar-chart"></i>
-                <span>Reports</span>
-            </a>
-        </li>
+      <li>
+    <a href="reports.php" class="<?= basename($_SERVER['PHP_SELF']) == 'reports.php' ? 'active' : '' ?>">
+        <i class="bi bi-bar-chart-line"></i>
+        <span>Reports</span>
+    </a>
+</li>
 
         <li>
             <a href="#">

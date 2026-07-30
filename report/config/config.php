@@ -1,12 +1,26 @@
 <?php
 
+// ================================
+// Application Settings
+// ================================
+
+define('APP_NAME', 'CarPool Admin');
+define('APP_VERSION', '1.0.0');
+define('TIMEZONE', 'Asia/Kolkata');
+
+// ================================
 // Database Configuration
+// ================================
+
 $dbHost = "localhost";
 $dbName = "carpool_db";
 $dbUser = "root";
 $dbPass = "";
 
+// ================================
 // Create Database Connection
+// ================================
+
 $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
 // Check Connection
@@ -18,4 +32,4 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8mb4");
 
 // Set Default Timezone
-date_default_timezone_set("Asia/Kolkata");
+date_default_timezone_set(TIMEZONE);

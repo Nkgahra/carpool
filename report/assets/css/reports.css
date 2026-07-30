@@ -1,0 +1,115 @@
+/* ==========================================
+   Reports Page
+========================================== */
+
+body{
+    background:#f5f7fb;
+}
+
+.main-content{
+    background:#f5f7fb;
+    min-height:100vh;
+}
+
+/* Page Header */
+
+.page-header{
+    background:#fff;
+    border-radius:18px;
+    padding:25px 30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+    margin-bottom:30px;
+}
+
+.page-header h2{
+    font-size:32px;
+    font-weight:700;
+    color:#212529;
+}
+
+.page-header p{
+    color:#6c757d;
+    margin:0;
+}
+
+/* Refresh Button */
+
+.refresh-btn{
+    border-radius:12px;
+    padding:12px 22px;
+    font-weight:600;
+}
+
+/* KPI Cards */
+
+.kpi-card{
+
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+    transition:.3s;
+
+    height:100%;
+
+}
+
+.kpi-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.08);
+
+}
+
+.kpi-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ede9fe;
+
+    color:#7c3aed;
+
+    font-size:26px;
+
+    margin-bottom:18px;
+
+}
+
+.kpi-title{
+
+    color:#6c757d;
+
+    font-size:15px;
+
+}
+
+.kpi-value{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin:5px 0;
+
+}
+
+.kpi-growth{
+
+    color:#16a34a;
+
+    font-weight:600;
+
+}
