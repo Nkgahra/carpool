@@ -1,0 +1,249 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+
+    background:linear-gradient(
+        135deg,
+      #2d004d,
+      #5b1aa7,
+      #702ef6,
+      #ad70fd,
+      #c5acf6
+    );
+
+    overflow:hidden;
+}
+
+/* Floating blurred circles */
+body::before{
+    content:"";
+    position:absolute;
+    width:320px;
+    height:320px;
+    background:rgba(255,255,255,0.18);
+    border-radius:50%;
+    top:-100px;
+    left:-100px;
+    filter:blur(20px);
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    width:280px;
+    height:280px;
+    background:rgba(255,255,255,0.15);
+    border-radius:50%;
+    bottom:-80px;
+    right:-80px;
+    filter:blur(25px);
+}
+
+.login-card{
+
+    width:430px;
+
+    padding:45px;
+
+    background:rgba(255,255,255,.14);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    border-radius:25px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.25);
+
+    animation:fadeIn .8s ease;
+
+    position:relative;
+
+    z-index:5;
+
+}
+.login-card h1{
+    text-align:center;
+    color:rgba(237, 232, 244, 0.938);
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+/* Labels */
+label{
+    color:white;
+    font-size:14px;
+    font-weight:500;
+}
+
+/* Inputs */
+input[type="email"],
+input[type="password"]{
+
+    width:100%;
+    padding:13px 16px;
+
+    margin-top:8px;
+
+    border:none;
+    outline:none;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.9);
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus{
+
+    transform:scale(1.02);
+
+    box-shadow:0 0 15px rgba(255,255,255,.4);
+}
+
+/* Remember Me */
+input[type="checkbox"]{
+    margin-right:8px;
+}
+
+/* Forgot Password */
+a{
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:white;
+
+    color:#6a0dad;
+
+    font-weight:600;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#6a0dad;
+
+    color:white;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 10px 30px rgba(96, 14, 147, 0.514);
+
+}
+p{
+    color:#ffdddd;
+    text-align:center;
+    margin-bottom:15px;
+    font-weight:600;
+}
+
+.subtitle{
+
+    color:rgba(255,255,255,.8);
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+    font-size:15px;
+
+}
+.options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:10px;
+
+}
+
+.remember{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:white;
+
+    font-size:14px;
+
+}
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    display: block;
+}
+
+.error{
+    background: rgba(255, 99, 99, 0.2);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.success{
+    background: rgba(0, 200, 120, 0.2);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
