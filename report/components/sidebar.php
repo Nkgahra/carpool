@@ -18,15 +18,15 @@
 
     <ul class="sidebar-menu">
 
-        <li class="active">
-            <a href="dashboard.php">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
+      <li class="<?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>">
+    <a href="dashboard.php">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
 
-      <li>
-    <a href="reports.php" class="<?= basename($_SERVER['PHP_SELF']) == 'reports.php' ? 'active' : '' ?>">
+<li class="<?= basename($_SERVER['PHP_SELF']) == 'reports.php' ? 'active' : '' ?>">
+    <a href="reports.php">
         <i class="bi bi-bar-chart-line"></i>
         <span>Reports</span>
     </a>

@@ -1,195 +1,530 @@
-    <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+<?php
 
-    require_once 'config/config.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    $pageTitle = "Reports";
-    ?>
+require_once 'config/config.php';
 
-    <!DOCTYPE html>
-    <html lang="en">
+// Default report
+$reportType = $_GET['report'] ?? 'revenue';
 
-    <head>
+// Allowed reports
+$allowedReports = [
+    'revenue',
+    'bookings',
+    'rides',
+    'users',
+    'drivers',
+    'payments'
+];
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+if (!in_array($reportType, $allowedReports)) {
+    $reportType = 'revenue';
+}
 
-        <title><?= $pageTitle ?> | <?= APP_NAME ?></title>
+$pageTitle = "Reports";
 
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+?>
 
-        <!-- Bootstrap Icons -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Chart.js -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<head>
 
-        <!-- Common CSS -->
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/sidebar.css">
-        <link rel="stylesheet" href="assets/css/navbar.css">
-        <link rel="stylesheet" href="assets/css/responsive.css">
+    <meta charset="UTF-8">
 
-        <!-- Reports CSS -->
-        <link rel="stylesheet" href="assets/css/reports.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    </head>
+    <title>Reports | CarPool Admin</title>
 
-    <body>
+    <!-- Google Font -->
 
-    <div class="wrapper">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-        <?php include 'components/sidebar.php'; ?>
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-        <div class="main-content">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
-            <?php include 'components/navbar.php'; ?>
+    <!-- Bootstrap -->
 
-            <div class="container-fluid py-4">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-                <!-- Page Header -->
-               <div class="page-header d-flex justify-content-between align-items-center">
+    <!-- Bootstrap Icons -->
 
-    <div>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-        <h2>Reports & Analytics</h2>
+    <!-- Existing CSS -->
 
-        <p>
-            Generate reports, visualize business performance and export insights.
-        </p>
+    <link rel="stylesheet"
+          href="assets/css/variables.css">
 
-    </div>
+    <link rel="stylesheet"
+          href="assets/css/style.css">
 
-    <button class="btn btn-primary refresh-btn">
+    <link rel="stylesheet"
+          href="assets/css/navbar.css">
 
-        <i class="bi bi-arrow-clockwise"></i>
+    <link rel="stylesheet"
+          href="assets/css/sidebar.css">
 
-        Refresh
+    <!-- Reports CSS -->
 
-    </button>
+    <link rel="stylesheet"
+          href="assets/css/reports.css">
 
-</div>
-<div class="row g-4 mt-1">
+</head>
 
-    <div class="col-lg-3 col-md-6">
+<body>
 
-        <div class="kpi-card">
+<!-- Sidebar -->
 
-            <div class="kpi-icon">
+<?php include 'components/sidebar.php'; ?>
 
-                <i class="bi bi-currency-rupee"></i>
 
-            </div>
+<!-- Navbar -->
 
-            <div class="kpi-title">Total Revenue</div>
+<?php include 'components/navbar.php'; ?>
 
-            <div class="kpi-value">₹2.45L</div>
 
-            <div class="kpi-growth">
+<!-- Main Content -->
 
-                <i class="bi bi-arrow-up"></i>
+<main class="main-content">
 
-                +18%
+    <div class="container-fluid">
 
-            </div>
+        <!-- =========================================
+             REPORT PAGE HEADER
+        ========================================== -->
 
-        </div>
+        <div class="report-page-header">
 
-    </div>
+            <div>
 
-    <div class="col-lg-3 col-md-6">
+                <h2>Reports & Analytics</h2>
 
-        <div class="kpi-card">
-
-            <div class="kpi-icon">
-
-                <i class="bi bi-journal-check"></i>
-
-            </div>
-
-            <div class="kpi-title">Bookings</div>
-
-            <div class="kpi-value">1,245</div>
-
-            <div class="kpi-growth">
-
-                <i class="bi bi-arrow-up"></i>
-
-                +11%
+                <p>
+                    Analyze business performance and generate detailed reports.
+                </p>
 
             </div>
 
-        </div>
+            <div class="report-header-actions">
 
-    </div>
+                <button
+                    type="button"
+                    class="report-refresh-btn"
+                    onclick="window.location.reload();">
 
-    <div class="col-lg-3 col-md-6">
+                    <i class="bi bi-arrow-clockwise"></i>
 
-        <div class="kpi-card">
+                    Refresh
 
-            <div class="kpi-icon">
-
-                <i class="bi bi-people"></i>
-
-            </div>
-
-            <div class="kpi-title">Users</div>
-
-            <div class="kpi-value">856</div>
-
-            <div class="kpi-growth">
-
-                <i class="bi bi-arrow-up"></i>
-
-                +7%
+                </button>
 
             </div>
 
         </div>
 
-    </div>
 
-    <div class="col-lg-3 col-md-6">
+        <!-- =========================================
+             REPORT CONTROLS
+        ========================================== -->
 
-        <div class="kpi-card">
+        <div class="report-filter-card">
 
-            <div class="kpi-icon">
+            <div class="report-filter-header">
 
-                <i class="bi bi-car-front"></i>
+                <div>
 
-            </div>
+                    <h4>Generate Report</h4>
 
-            <div class="kpi-title">Completed Rides</div>
+                    <p>
+                        Select the report and filters you want to analyze.
+                    </p>
 
-            <div class="kpi-value">328</div>
-
-            <div class="kpi-growth">
-
-                <i class="bi bi-arrow-up"></i>
-
-                +22%
+                </div>
 
             </div>
+
+
+            <form method="GET"
+                  action="reports.php"
+                  class="report-filter-grid">
+
+
+                <!-- Report Type -->
+
+                <div class="report-filter-group">
+
+                    <label for="report">
+
+                        Report Type
+
+                    </label>
+
+                    <div class="report-select-wrapper">
+
+                        <i class="bi bi-bar-chart-line"></i>
+
+                        <select
+                            name="report"
+                            id="report"
+                            class="report-select">
+
+                            <option
+                                value="revenue"
+                                <?= $reportType === 'revenue' ? 'selected' : '' ?>>
+
+                                Revenue Report
+
+                            </option>
+
+                            <option
+                                value="bookings"
+                                <?= $reportType === 'bookings' ? 'selected' : '' ?>>
+
+                                Bookings Report
+
+                            </option>
+
+                            <option
+                                value="rides"
+                                <?= $reportType === 'rides' ? 'selected' : '' ?>>
+
+                                Rides Report
+
+                            </option>
+
+                            <option
+                                value="users"
+                                <?= $reportType === 'users' ? 'selected' : '' ?>>
+
+                                Users Report
+
+                            </option>
+
+                            <option
+                                value="drivers"
+                                <?= $reportType === 'drivers' ? 'selected' : '' ?>>
+
+                                Drivers Report
+
+                            </option>
+
+                            <option
+                                value="payments"
+                                <?= $reportType === 'payments' ? 'selected' : '' ?>>
+
+                                Payments Report
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Date Range -->
+
+                <div class="report-filter-group">
+
+                    <label for="range">
+
+                        Date Range
+
+                    </label>
+
+                    <div class="report-select-wrapper">
+
+                        <i class="bi bi-calendar3"></i>
+
+                        <select
+                            name="range"
+                            id="range"
+                            class="report-select">
+
+                            <option value="7">
+                                Last 7 Days
+                            </option>
+
+                            <option value="30" selected>
+                                Last 30 Days
+                            </option>
+
+                            <option value="90">
+                                Last 3 Months
+                            </option>
+
+                            <option value="365">
+                                Last 12 Months
+                            </option>
+
+                            <option value="all">
+                                All Time
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="report-filter-group">
+
+                    <label for="status">
+
+                        Status
+
+                    </label>
+
+                    <div class="report-select-wrapper">
+
+                        <i class="bi bi-funnel"></i>
+
+                        <select
+                            name="status"
+                            id="status"
+                            class="report-select">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="started">
+                                Started
+                            </option>
+
+                            <option value="full">
+                                Full
+                            </option>
+
+                            <option value="completed">
+                                Completed
+                            </option>
+
+                            <option value="cancelled">
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Generate -->
+
+                <div class="report-filter-group report-generate-group">
+
+                    <label>&nbsp;</label>
+
+                    <button
+                        type="submit"
+                        class="generate-report-btn">
+
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                        Generate Report
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================================
+             DYNAMIC REPORT CONTENT
+        ========================================== -->
+
+        <div class="report-content">
+
+            <?php
+
+            switch ($reportType) {
+
+                case 'bookings':
+
+                    ?>
+
+                    <div class="report-placeholder">
+
+                        <i class="bi bi-calendar-check"></i>
+
+                        <h3>Bookings Report</h3>
+
+                        <p>
+                            Booking analytics will appear here.
+                        </p>
+
+                    </div>
+
+                    <?php
+
+                    break;
+
+
+                case 'rides':
+
+                    ?>
+
+                    <div class="report-placeholder">
+
+                        <i class="bi bi-car-front"></i>
+
+                        <h3>Rides Report</h3>
+
+                        <p>
+                            Ride analytics will appear here.
+                        </p>
+
+                    </div>
+
+                    <?php
+
+                    break;
+
+
+                case 'users':
+
+                    ?>
+
+                    <div class="report-placeholder">
+
+                        <i class="bi bi-people"></i>
+
+                        <h3>Users Report</h3>
+
+                        <p>
+                            User analytics will appear here.
+                        </p>
+
+                    </div>
+
+                    <?php
+
+                    break;
+
+
+                case 'drivers':
+
+                    ?>
+
+                    <div class="report-placeholder">
+
+                        <i class="bi bi-person-badge"></i>
+
+                        <h3>Drivers Report</h3>
+
+                        <p>
+                            Driver analytics will appear here.
+                        </p>
+
+                    </div>
+
+                    <?php
+
+                    break;
+
+
+                case 'payments':
+
+                    ?>
+
+                    <div class="report-placeholder">
+
+                        <i class="bi bi-credit-card"></i>
+
+                        <h3>Payments Report</h3>
+
+                        <p>
+                            Payment analytics will appear here.
+                        </p>
+
+                    </div>
+
+                    <?php
+
+                    break;
+
+
+                case 'revenue':
+
+                default:
+
+                    ?>
+
+                    <!-- Revenue is the DEFAULT report -->
+
+                    <div class="report-placeholder revenue-placeholder">
+
+                        <div class="placeholder-icon">
+
+                            <i class="bi bi-currency-rupee"></i>
+
+                        </div>
+
+                        <h3>Revenue Report</h3>
+
+                        <p>
+                            Revenue analytics are ready to be generated.
+                        </p>
+
+                    </div>
+
+                    <?php
+
+                    break;
+
+            }
+
+            ?>
 
         </div>
 
     </div>
 
-</div>
+</main>
 
-                <!-- Content Starts Here -->
 
-            </div>
+<!-- Bootstrap JS -->
 
-        </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js -->
 
-    <script src="assets/js/reports.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    </body>
-    </html>
+
+<!-- Existing JS -->
+
+<script src="assets/js/main.js"></script>
+
+
+<!-- Reports JS -->
+
+<script src="assets/js/reports.js"></script>
+
+</body>
+
+</html>

@@ -1,115 +1,377 @@
 /* ==========================================
-   Reports Page
+   REPORTS PAGE
 ========================================== */
 
-body{
-    background:#f5f7fb;
-}
-
-.main-content{
-    background:#f5f7fb;
-    min-height:100vh;
-}
-
-/* Page Header */
-
-.page-header{
-    background:#fff;
-    border-radius:18px;
-    padding:25px 30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.05);
-    margin-bottom:30px;
-}
-
-.page-header h2{
-    font-size:32px;
-    font-weight:700;
-    color:#212529;
-}
-
-.page-header p{
-    color:#6c757d;
-    margin:0;
-}
-
-/* Refresh Button */
-
-.refresh-btn{
-    border-radius:12px;
-    padding:12px 22px;
-    font-weight:600;
-}
-
-/* KPI Cards */
-
-.kpi-card{
-
-    background:#fff;
-    border-radius:20px;
-    padding:25px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.06);
-
-    transition:.3s;
-
-    height:100%;
-
-}
-
-.kpi-card:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:0 18px 35px rgba(0,0,0,.08);
-
-}
-
-.kpi-icon{
-
-    width:60px;
-
-    height:60px;
-
-    border-radius:16px;
+.report-page-header{
 
     display:flex;
-
-    justify-content:center;
-
+    justify-content:space-between;
     align-items:center;
 
-    background:#ede9fe;
-
-    color:#7c3aed;
-
-    font-size:26px;
-
-    margin-bottom:18px;
+    margin-bottom:25px;
 
 }
 
-.kpi-title{
+.report-page-header h2{
 
-    color:#6c757d;
+    font-size:28px;
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:5px;
+
+}
+
+.report-page-header p{
+
+    margin:0;
+
+    color:#6b7280;
 
     font-size:15px;
 
 }
 
-.kpi-value{
 
-    font-size:34px;
+/* ==========================================
+   REFRESH BUTTON
+========================================== */
 
-    font-weight:700;
+.report-refresh-btn{
 
-    margin:5px 0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    border:1px solid #e5e7eb;
+
+    background:#fff;
+
+    color:#374151;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.25s;
 
 }
 
-.kpi-growth{
+.report-refresh-btn:hover{
 
-    color:#16a34a;
+    border-color:#7c3aed;
+
+    color:#7c3aed;
+
+}
+
+
+/* ==========================================
+   FILTER CARD
+========================================== */
+
+.report-filter-card{
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.04);
+
+    margin-bottom:25px;
+
+}
+
+.report-filter-header{
+
+    margin-bottom:22px;
+
+}
+
+.report-filter-header h4{
+
+    margin:0 0 5px;
+
+    font-size:20px;
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.report-filter-header p{
+
+    margin:0;
+
+    color:#6b7280;
+
+    font-size:14px;
+
+}
+
+
+/* ==========================================
+   FILTER GRID
+========================================== */
+
+.report-filter-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3, minmax(180px,1fr))
+        auto;
+
+    gap:18px;
+
+    align-items:end;
+
+}
+
+.report-filter-group{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.report-filter-group label{
+
+    font-size:13px;
 
     font-weight:600;
+
+    color:#4b5563;
+
+}
+
+
+/* ==========================================
+   SELECT
+========================================== */
+
+.report-select-wrapper{
+
+    position:relative;
+
+}
+
+.report-select-wrapper > i{
+
+    position:absolute;
+
+    left:14px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#7c3aed;
+
+    font-size:16px;
+
+    pointer-events:none;
+
+}
+
+.report-select{
+
+    width:100%;
+
+    height:48px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:10px;
+
+    background:#f9fafb;
+
+    padding:0 40px;
+
+    color:#111827;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.2s;
+
+}
+
+.report-select:focus{
+
+    background:#fff;
+
+    border-color:#7c3aed;
+
+    box-shadow:0 0 0 3px rgba(124,58,237,.10);
+
+}
+
+
+/* ==========================================
+   GENERATE BUTTON
+========================================== */
+
+.generate-report-btn{
+
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    padding:0 22px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#7c3aed;
+
+    color:#fff;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+    transition:.25s;
+
+}
+
+.generate-report-btn:hover{
+
+    background:#6d28d9;
+
+    transform:translateY(-1px);
+
+}
+
+
+/* ==========================================
+   DYNAMIC CONTENT
+========================================== */
+
+.report-content{
+
+    margin-top:25px;
+
+}
+
+
+/* Temporary while reports are built */
+
+.report-placeholder{
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:18px;
+
+    min-height:300px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:40px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.04);
+
+}
+
+.placeholder-icon{
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:#ede9fe;
+
+    color:#7c3aed;
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+}
+
+.report-placeholder h3{
+
+    font-size:21px;
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:6px;
+
+}
+
+.report-placeholder p{
+
+    margin:0;
+
+    color:#6b7280;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+    .report-filter-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .report-page-header{
+
+        flex-direction:column;
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .report-filter-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .generate-report-btn{
+
+        width:100%;
+
+    }
 
 }
