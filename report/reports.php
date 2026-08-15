@@ -4,11 +4,18 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once 'config/config.php';
+require_once 'includes/revenue_report.php';
 
-// Default report
+$pageTitle = "Reports";
+
+/*
+|--------------------------------------------------------------------------
+| Report Type
+|--------------------------------------------------------------------------
+*/
+
 $reportType = $_GET['report'] ?? 'revenue';
 
-// Allowed reports
 $allowedReports = [
     'revenue',
     'bookings',
@@ -22,7 +29,14 @@ if (!in_array($reportType, $allowedReports)) {
     $reportType = 'revenue';
 }
 
-$pageTitle = "Reports";
+
+/*
+|--------------------------------------------------------------------------
+| Date Range
+|--------------------------------------------------------------------------
+*/
+
+$dateRange = $_GET['range'] ?? '30';
 
 ?>
 
@@ -36,7 +50,8 @@ $pageTitle = "Reports";
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Reports | CarPool Admin</title>
+    <title><?= $pageTitle ?> | <?= APP_NAME ?></title>
+
 
     <!-- Google Font -->
 
@@ -50,16 +65,19 @@ $pageTitle = "Reports";
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
 
+
     <!-- Bootstrap -->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
           rel="stylesheet">
+
 
     <!-- Bootstrap Icons -->
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Existing CSS -->
 
     <link rel="stylesheet"
@@ -74,6 +92,7 @@ $pageTitle = "Reports";
     <link rel="stylesheet"
           href="assets/css/sidebar.css">
 
+
     <!-- Reports CSS -->
 
     <link rel="stylesheet"
@@ -81,7 +100,9 @@ $pageTitle = "Reports";
 
 </head>
 
+
 <body>
+
 
 <!-- Sidebar -->
 
@@ -99,9 +120,10 @@ $pageTitle = "Reports";
 
     <div class="container-fluid">
 
-        <!-- =========================================
-             REPORT PAGE HEADER
-        ========================================== -->
+
+        <!-- ==========================================
+             PAGE HEADER
+        =========================================== -->
 
         <div class="report-page-header">
 
@@ -115,7 +137,8 @@ $pageTitle = "Reports";
 
             </div>
 
-            <div class="report-header-actions">
+
+            <div>
 
                 <button
                     type="button"
@@ -133,11 +156,13 @@ $pageTitle = "Reports";
         </div>
 
 
-        <!-- =========================================
-             REPORT CONTROLS
-        ========================================== -->
+
+        <!-- ==========================================
+             GENERAL REPORT CONTROLS
+        =========================================== -->
 
         <div class="report-filter-card">
+
 
             <div class="report-filter-header">
 
@@ -146,7 +171,7 @@ $pageTitle = "Reports";
                     <h4>Generate Report</h4>
 
                     <p>
-                        Select the report and filters you want to analyze.
+                        Select the report type and date range.
                     </p>
 
                 </div>
@@ -154,9 +179,11 @@ $pageTitle = "Reports";
             </div>
 
 
-            <form method="GET"
-                  action="reports.php"
-                  class="report-filter-grid">
+
+            <form
+                method="GET"
+                action="reports.php"
+                class="report-filter-grid">
 
 
                 <!-- Report Type -->
@@ -169,14 +196,17 @@ $pageTitle = "Reports";
 
                     </label>
 
+
                     <div class="report-select-wrapper">
 
                         <i class="bi bi-bar-chart-line"></i>
+
 
                         <select
                             name="report"
                             id="report"
                             class="report-select">
+
 
                             <option
                                 value="revenue"
@@ -186,6 +216,7 @@ $pageTitle = "Reports";
 
                             </option>
 
+
                             <option
                                 value="bookings"
                                 <?= $reportType === 'bookings' ? 'selected' : '' ?>>
@@ -193,6 +224,7 @@ $pageTitle = "Reports";
                                 Bookings Report
 
                             </option>
+
 
                             <option
                                 value="rides"
@@ -202,6 +234,7 @@ $pageTitle = "Reports";
 
                             </option>
 
+
                             <option
                                 value="users"
                                 <?= $reportType === 'users' ? 'selected' : '' ?>>
@@ -209,6 +242,7 @@ $pageTitle = "Reports";
                                 Users Report
 
                             </option>
+
 
                             <option
                                 value="drivers"
@@ -218,6 +252,7 @@ $pageTitle = "Reports";
 
                             </option>
 
+
                             <option
                                 value="payments"
                                 <?= $reportType === 'payments' ? 'selected' : '' ?>>
@@ -226,11 +261,13 @@ $pageTitle = "Reports";
 
                             </option>
 
+
                         </select>
 
                     </div>
 
                 </div>
+
 
 
                 <!-- Date Range -->
@@ -243,34 +280,62 @@ $pageTitle = "Reports";
 
                     </label>
 
+
                     <div class="report-select-wrapper">
 
                         <i class="bi bi-calendar3"></i>
+
 
                         <select
                             name="range"
                             id="range"
                             class="report-select">
 
-                            <option value="7">
+
+                            <option
+                                value="7"
+                                <?= $dateRange === '7' ? 'selected' : '' ?>>
+
                                 Last 7 Days
+
                             </option>
 
-                            <option value="30" selected>
+
+                            <option
+                                value="30"
+                                <?= $dateRange === '30' ? 'selected' : '' ?>>
+
                                 Last 30 Days
+
                             </option>
 
-                            <option value="90">
+
+                            <option
+                                value="90"
+                                <?= $dateRange === '90' ? 'selected' : '' ?>>
+
                                 Last 3 Months
+
                             </option>
 
-                            <option value="365">
+
+                            <option
+                                value="365"
+                                <?= $dateRange === '365' ? 'selected' : '' ?>>
+
                                 Last 12 Months
+
                             </option>
 
-                            <option value="all">
+
+                            <option
+                                value="all"
+                                <?= $dateRange === 'all' ? 'selected' : '' ?>>
+
                                 All Time
+
                             </option>
+
 
                         </select>
 
@@ -279,61 +344,19 @@ $pageTitle = "Reports";
                 </div>
 
 
-                <!-- Status -->
 
-                <div class="report-filter-group">
+                <!-- Empty Space -->
 
-                    <label for="status">
+                <div class="report-filter-empty"></div>
 
-                        Status
-
-                    </label>
-
-                    <div class="report-select-wrapper">
-
-                        <i class="bi bi-funnel"></i>
-
-                        <select
-                            name="status"
-                            id="status"
-                            class="report-select">
-
-                            <option value="all">
-                                All Status
-                            </option>
-
-                            <option value="active">
-                                Active
-                            </option>
-
-                            <option value="started">
-                                Started
-                            </option>
-
-                            <option value="full">
-                                Full
-                            </option>
-
-                            <option value="completed">
-                                Completed
-                            </option>
-
-                            <option value="cancelled">
-                                Cancelled
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
 
 
                 <!-- Generate -->
 
-                <div class="report-filter-group report-generate-group">
+                <div class="report-filter-group">
 
                     <label>&nbsp;</label>
+
 
                     <button
                         type="submit"
@@ -347,157 +370,522 @@ $pageTitle = "Reports";
 
                 </div>
 
+
             </form>
 
         </div>
 
 
-        <!-- =========================================
-             DYNAMIC REPORT CONTENT
-        ========================================== -->
+
+        <!-- ==========================================
+             REPORT CONTENT
+        =========================================== -->
 
         <div class="report-content">
 
-            <?php
 
-            switch ($reportType) {
-
-                case 'bookings':
-
-                    ?>
-
-                    <div class="report-placeholder">
-
-                        <i class="bi bi-calendar-check"></i>
-
-                        <h3>Bookings Report</h3>
-
-                        <p>
-                            Booking analytics will appear here.
-                        </p>
-
-                    </div>
-
-                    <?php
-
-                    break;
+            <?php if ($reportType === 'revenue'): ?>
 
 
-                case 'rides':
+                <!-- ==================================
+                     REVENUE REPORT
+                =================================== -->
 
-                    ?>
-
-                    <div class="report-placeholder">
-
-                        <i class="bi bi-car-front"></i>
-
-                        <h3>Rides Report</h3>
-
-                        <p>
-                            Ride analytics will appear here.
-                        </p>
-
-                    </div>
-
-                    <?php
-
-                    break;
+                <div class="report-section">
 
 
-                case 'users':
+                    <div class="report-section-header">
 
-                    ?>
+                        <div>
 
-                    <div class="report-placeholder">
+                            <h3>
 
-                        <i class="bi bi-people"></i>
+                                <i class="bi bi-currency-rupee"></i>
 
-                        <h3>Users Report</h3>
+                                Revenue Report
 
-                        <p>
-                            User analytics will appear here.
-                        </p>
+                            </h3>
 
-                    </div>
-
-                    <?php
-
-                    break;
-
-
-                case 'drivers':
-
-                    ?>
-
-                    <div class="report-placeholder">
-
-                        <i class="bi bi-person-badge"></i>
-
-                        <h3>Drivers Report</h3>
-
-                        <p>
-                            Driver analytics will appear here.
-                        </p>
-
-                    </div>
-
-                    <?php
-
-                    break;
-
-
-                case 'payments':
-
-                    ?>
-
-                    <div class="report-placeholder">
-
-                        <i class="bi bi-credit-card"></i>
-
-                        <h3>Payments Report</h3>
-
-                        <p>
-                            Payment analytics will appear here.
-                        </p>
-
-                    </div>
-
-                    <?php
-
-                    break;
-
-
-                case 'revenue':
-
-                default:
-
-                    ?>
-
-                    <!-- Revenue is the DEFAULT report -->
-
-                    <div class="report-placeholder revenue-placeholder">
-
-                        <div class="placeholder-icon">
-
-                            <i class="bi bi-currency-rupee"></i>
+                            <p>
+                                Revenue performance for the selected period.
+                            </p>
 
                         </div>
 
-                        <h3>Revenue Report</h3>
 
-                        <p>
-                            Revenue analytics are ready to be generated.
-                        </p>
+                        <div class="report-actions">
+
+                            <a href="export_revenue_excel.php" class="report-export-btn">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+        Export Excel
+    </a>
+
+    <a href="export_revenue_csv.php" class="report-export-btn">
+        <i class="bi bi-filetype-csv"></i>
+        Export CSV
+    </a>
+
+                        </div>
 
                     </div>
 
+
+
+                    <!-- Revenue Specific Filters -->
+
+                    
+
+
+
+                    <!-- Revenue Summary -->
+
+                    <div class="report-summary-grid">
+
+
+                        <div class="report-summary-card">
+
+                            <div class="report-summary-icon purple">
+
+                                <i class="bi bi-currency-rupee"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>Total Revenue</span>
+
+                                <strong>
+    ₹<?= number_format($totalRevenue, 2) ?>
+</strong>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="report-summary-card">
+
+                            <div class="report-summary-icon green">
+
+                                <i class="bi bi-graph-up"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>Average Fare</span>
+
+                               <strong>
+    ₹<?= number_format($averageFare, 2) ?>
+</strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="report-summary-card">
+
+                            <div class="report-summary-icon blue">
+
+                                <i class="bi bi-check-circle"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>Completed Trips</span>
+
+                               <strong>
+    <?= number_format($completedTrips) ?>
+</strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="report-summary-card">
+
+                            <div class="report-summary-icon orange">
+
+                                <i class="bi bi-receipt"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>Total Transactions</span>
+
+                                <strong>
+    <?= number_format($totalTransactions) ?>
+</strong>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- Charts -->
+
+                    <div class="report-chart-grid">
+
+
+                        <div class="report-chart-card">
+
+    <div class="chart-card-header">
+
+        <div>
+
+            <h4>Revenue Trend</h4>
+
+            <p>
+                Revenue generated over time
+            </p>
+
+        </div>
+
+    </div>
+
+
+   <div class="chart-container">
+    <canvas id="revenueTrendChart"></canvas>
+</div>
+</div>
+
+
+
+                        <div class="report-chart-card">
+
+                            <div class="chart-card-header">
+
+                                <div>
+
+                                    <h4>Revenue by Route</h4>
+
+                                    <p>
+                                        Revenue distribution by route
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                           <div class="chart-container">
+    <canvas id="revenueRouteChart"></canvas>
+</div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                   <div class="report-table-card">
+<div class="report-table-header">
+
+    <div>
+
+        <h4>Revenue Details</h4>
+
+        <p>
+            Latest revenue transactions.
+        </p>
+
+    </div>
+
+    <a href="revenue_details.php" class="view-all-btn">
+
+        <i class="bi bi-list-ul"></i>
+
+        View All
+
+    </a>
+
+</div>
+
+
+    <div class="table-responsive">
+
+        <table class="table report-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Booking ID</th>
+
+                    <th>Passenger</th>
+
+                    <th>Route</th>
+
+                    <th>Fare</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <?php if (!empty($revenueData)): ?>
+
+                <?php foreach ($revenueData as $revenue): ?>
+
                     <?php
 
-                    break;
+                    $status = strtolower(
+                        trim($revenue['ride_status'])
+                    );
 
-            }
+                    switch ($status) {
 
-            ?>
+                        case 'completed':
+
+                            $statusClass = 'status-completed';
+                            $statusIcon = 'bi-patch-check-fill';
+                            $statusText = 'Completed';
+
+                            break;
+
+
+                        case 'active':
+
+                            $statusClass = 'status-active';
+                            $statusIcon = 'bi-play-circle-fill';
+                            $statusText = 'Active';
+
+                            break;
+
+
+                        case 'started':
+
+                            $statusClass = 'status-accepted';
+                            $statusIcon = 'bi-play-fill';
+                            $statusText = 'Started';
+
+                            break;
+
+
+                        case 'cancelled':
+
+                            $statusClass = 'status-cancelled';
+                            $statusIcon = 'bi-x-circle-fill';
+                            $statusText = 'Cancelled';
+
+                            break;
+
+
+                        case 'full':
+
+                            $statusClass = 'status-pending';
+                            $statusIcon = 'bi-people-fill';
+                            $statusText = 'Full';
+
+                            break;
+
+
+                        default:
+
+                            $statusClass = 'status-default';
+                            $statusIcon = 'bi-dash-circle-fill';
+                            $statusText = ucfirst($status);
+
+                            break;
+
+                    }
+
+                    ?>
+
+                    <tr>
+
+                        <!-- Booking ID -->
+
+                        <td>
+
+                            <?= htmlspecialchars(
+                                $revenue['booking_code']
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Passenger -->
+
+                        <td>
+
+                            <?= htmlspecialchars(
+                                $revenue['full_name']
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Route -->
+
+                        <td>
+
+                            <?= htmlspecialchars(
+                                $revenue['pickup_address']
+                            ) ?>
+
+                            <span class="route-arrow">
+                                →
+                            </span>
+
+                            <?= htmlspecialchars(
+                                $revenue['destination_address']
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Fare -->
+
+                        <td>
+
+                            ₹<?= number_format(
+                                (float)$revenue['total_fare'],
+                                2
+                            ) ?>
+
+                        </td>
+
+
+                        <!-- Status -->
+
+                        <td>
+
+                            <span
+                                class="status-badge <?= $statusClass ?>"
+                            >
+
+                                <i
+                                    class="bi <?= $statusIcon ?>"
+                                ></i>
+
+                                <?= $statusText ?>
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Date -->
+
+                        <td>
+
+                            <?= date(
+                                'd M Y',
+                                strtotime(
+                                    $revenue['created_at']
+                                )
+                            ) ?>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+
+            <?php else: ?>
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="text-center text-muted py-5"
+                    >
+
+                        <i class="bi bi-receipt fs-3 d-block mb-2"></i>
+
+                        No revenue transactions found
+                        for the selected period.
+
+                    </td>
+
+                </tr>
+
+            <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+            <?php else: ?>
+
+
+                <!-- ==================================
+                     OTHER REPORTS
+                =================================== -->
+
+                <div class="report-section report-coming-soon">
+
+
+                    <div class="report-coming-icon">
+
+                        <?php
+
+                        $icons = [
+
+                            'bookings' => 'bi-calendar-check',
+
+                            'rides' => 'bi-car-front',
+
+                            'users' => 'bi-people',
+
+                            'drivers' => 'bi-person-badge',
+
+                            'payments' => 'bi-credit-card'
+
+                        ];
+
+                        ?>
+
+
+                        <i class="bi <?= $icons[$reportType] ?>"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        <?= ucfirst($reportType) ?> Report
+
+                    </h3>
+
+
+                    <p>
+
+                        This report will use the selected date range
+                        and report-specific filters.
+
+                    </p>
+
+
+                </div>
+
+
+            <?php endif; ?>
+
 
         </div>
 
@@ -506,14 +894,10 @@ $pageTitle = "Reports";
 </main>
 
 
+
 <!-- Bootstrap JS -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-
-<!-- Chart.js -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <!-- Existing JS -->
@@ -524,6 +908,7 @@ $pageTitle = "Reports";
 <!-- Reports JS -->
 
 <script src="assets/js/reports.js"></script>
+
 
 </body>
 
